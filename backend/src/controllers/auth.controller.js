@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt"
@@ -63,3 +64,20 @@ export const Logout = async (req,res) =>{
 
     }
 };
+
+export const UpdateProfile = async (req,res)=>{
+    try {
+        const {profilePic} = req.body;
+        const userId = req.user._id;
+        if(!profilePic){
+            return res.status(401).json({ message: 'Profile pic is required' });
+        }
+        const uploadResponse = await cloudinary.uploader.upload(ProfilePic);
+        const updatedUser = await User.findByIdAndUpdate(userId, {profilePic:uploadResponse.secure_url},{new:true});
+        res.status(201).json(updatedUser);
+        
+    } catch (error) {
+        return res.status(401).json({ message: error });
+        
+    }
+}
