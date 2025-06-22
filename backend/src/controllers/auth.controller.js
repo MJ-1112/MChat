@@ -30,21 +30,21 @@ export const Login = async (req,res) =>{
     const  {email,password} = req.body;
     try{
         if(!email || !password){
-            res.status(401).json({message:'Fill all fields'});
+            return res.status(401).json({message:'Fill all fields'});
         }
         const user = await User.findOne({email});
         if(!user){
-            res.status(402).json({message:'User not found , please register first',success:false});
+            return res.status(402).json({message:'User not found , please register first',success:false});
         }
         const isPassword = await bcrypt.compare(password,user.password);
         if(!isPassword){
-            res.status(403).json({message:'Invalid Credentials',
+            return res.status(403).json({message:'Invalid Credentials',
                 success:false,
             });
             
         }
         generateToken(user._id,res);
-        res.status(201).json({message:'Login Succesfull',success:true})
+        return res.status(201).json({message:'Login Succesfull',success:true})
     }
     catch(error)
     {
@@ -72,12 +72,24 @@ export const UpdateProfile = async (req,res)=>{
         if(!profilePic){
             return res.status(401).json({ message: 'Profile pic is required' });
         }
-        const uploadResponse = await cloudinary.uploader.upload(ProfilePic);
+        const uploadResponse = await cloudinary.uploader.upload(profilePic);
         const updatedUser = await User.findByIdAndUpdate(userId, {profilePic:uploadResponse.secure_url},{new:true});
-        res.status(201).json(updatedUser);
+        return res.status(201).json(updatedUser);
         
     } catch (error) {
         return res.status(401).json({ message: error });
         
+    }
+}
+
+export const Check =  (req,res)=>{
+    try{
+
+        res.status(201).json(req.user);
+    }
+
+    catch(error){
+        res.status(401).json({message:error});
+
     }
 }
