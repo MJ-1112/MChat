@@ -4,7 +4,7 @@ import "./App.css";
 import Navbar from "./Navbar";
 import { handleError, handleSuccess } from "../utils";
 import axios from "axios";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 
 function Signup() {
   const navigate = useNavigate();

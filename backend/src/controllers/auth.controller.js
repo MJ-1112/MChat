@@ -55,7 +55,13 @@ export const Login = async (req,res) =>{
 
 export const Logout = async (req,res) =>{
     try{
-        res.cookie("jwt","",{maxAge:0});
+       res.clearCookie('jwt', {
+    httpOnly: true,
+    sameSite: "strict",  // ⬅ must match what you used in res.cookie()
+    secure: false,       // ⬅ also must match (true only in HTTPS)
+    path: "/",           // ⬅ good to include for safety
+  });
+  
         res.status(203).json({message:'Logged out successfully',success:true});
 
     }
@@ -85,7 +91,7 @@ export const UpdateProfile = async (req,res)=>{
 export const Check =  (req,res)=>{
     try{
 
-        res.status(201).json(req.user);
+        res.status(201).json({success:true,user:req.user});
     }
 
     catch(error){
