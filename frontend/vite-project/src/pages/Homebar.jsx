@@ -26,7 +26,7 @@ const handleClick = async () => {
         <nav className=' h-15 flex gap-200 items-center p-4 font-sans text-xl shadow '>
             
 
-            <span className='font-semibold text-2xl' >MChat</span>
+            <span className='font-semibold text-xxl' >MChat</span>
             <ul className='flex gap-10 '>
                <Link to='/home'><li className='cursor-pointer'>Home</li></Link>
                  <Link to='/settings'><li className='cursor-pointer'>Settings</li></Link>
@@ -34,7 +34,7 @@ const handleClick = async () => {
                  <li className='cursor-pointer' onClick={handleClick}>Logout</li>
             </ul>
             <ToastContainer/>
-            {/* No additional code needed here. Remove $PLACEHOLDER$ or leave empty if not required. */}
+            
         </nav>
     
   )
