@@ -8,7 +8,7 @@ const app = express();
 const Port = process.env.PORT;
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:5174', // replace with your frontend URL
+  origin: 'http://localhost:5173', // replace with your frontend URL
   credentials: true, // required for cookies
 }));  
 

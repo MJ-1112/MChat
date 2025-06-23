@@ -1,7 +1,7 @@
 import React from 'react'
 import { handleSuccess } from '../utils';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { ToastContainer} from "react-toastify";
 
 function Homebar() {
@@ -28,13 +28,13 @@ const handleClick = async () => {
 
             <span className='font-semibold text-2xl' >MChat</span>
             <ul className='flex gap-10 '>
-                <li className='cursor-pointer'>Home</li>
-                <li className='cursor-pointer'>Settings</li>
-                <li className='cursor-pointer'>Profile</li>
-                <li className='cursor-pointer' onClick={handleClick}>Logout</li>
+               <Link to='/home'><li className='cursor-pointer'>Home</li></Link>
+                 <Link to='/settings'><li className='cursor-pointer'>Settings</li></Link>
+                 <Link to='/profile'><li className='cursor-pointer'>Profile</li></Link>
+                 <li className='cursor-pointer' onClick={handleClick}>Logout</li>
             </ul>
             <ToastContainer/>
-            
+            {/* No additional code needed here. Remove $PLACEHOLDER$ or leave empty if not required. */}
         </nav>
     
   )
