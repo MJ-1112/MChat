@@ -1,8 +1,11 @@
 import React from 'react'
+import Homebar from './Homebar'
 
 function Settings() {
   return (
-    <div>Settings</div>
+    <div>
+        <Homebar/>
+    </div>
   )
 }
 
