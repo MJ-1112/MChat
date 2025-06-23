@@ -5,12 +5,14 @@ import Homepage from "./pages/Homepage";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
-import Navbar from "./pages/Navbar";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function App() {
   return (
     <div>
-      <Navbar />
-    
+      
+
       <Routes>
         <Route path="/home" element={<Homepage />}></Route>
         <Route path="/login" element={<Login />}></Route>
