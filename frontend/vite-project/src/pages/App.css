@@ -1,0 +1,5 @@
+.Container{
+    scroll-behavior: smooth;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
