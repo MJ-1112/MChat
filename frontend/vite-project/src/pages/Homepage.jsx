@@ -1,18 +1,31 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Homebar from './Homebar';
+import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import axios from 'axios';
+import Homebar from './Homebar';
+import ChatList from './ChatList';
+import DemoMessage from './DemoMessage';
 
 function Homepage() {
-  
- 
+  const [selectedUser, setSelectedUser] = useState(null);
 
   return (
-    <div>
+    <div className="h-screen flex flex-col">
       <Homebar />
       <ToastContainer />
-      <div className="text-center mt-4 text-xl">Welcome to the protected Homepage!</div>
+
+      {/* Main Chat Section */}
+      <div className="flex flex-grow">
+        {/* Left: Chat List */}
+        <ChatList onSelectUser={setSelectedUser} />
+
+        {/* Right: Chat Box or Demo */}
+        <div className="flex-grow  overflow-y-auto">
+          {selectedUser ? (
+            <ChatBox recipient={selectedUser} />
+          ) : (
+            <DemoMessage />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
