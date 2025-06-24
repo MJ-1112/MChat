@@ -55,7 +55,7 @@ function Profile() {
   return (
     <div>
       <Homebar />
-      <div className="flex p-5 mt-5 shadow-xl w-200 h-120 ml-30">
+      <div className="flex p-5 mt-5 border shadow-xl w-200 h-120 ml-30">
         <h1 className="font-Kanit text-4xl">Profile</h1>
 
         {/* Avatar with camera upload */}
@@ -100,10 +100,10 @@ function Profile() {
         {/* Profile Details */}
         {user && (
           <div>
-            <div className="bg-blue-100 h-15 w-100 rounded-xl p-5 flex items-center absolute top-65 left-80">
+            <div className="border h-15 w-100 rounded-xl p-5 flex items-center absolute top-65 left-80">
               {user.FullName}
             </div>
-            <div className="bg-blue-100 h-15 w-100 rounded-xl p-5 flex items-center absolute top-88 left-80">
+            <div className="  border h-15 w-100 rounded-xl p-5 flex items-center absolute top-88 left-80">
               {user.email}
             </div>
           </div>
