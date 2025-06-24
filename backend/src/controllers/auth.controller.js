@@ -71,22 +71,36 @@ export const Logout = async (req,res) =>{
     }
 };
 
-export const UpdateProfile = async (req,res)=>{
-    try {
-        const {profilePic} = req.body;
-        const userId = req.user._id;
-        if(!profilePic){
-            return res.status(401).json({ message: 'Profile pic is required' });
-        }
-        const uploadResponse = await cloudinary.uploader.upload(profilePic);
-        const updatedUser = await User.findByIdAndUpdate(userId, {profilePic:uploadResponse.secure_url},{new:true});
-        return res.status(201).json(updatedUser);
-        
-    } catch (error) {
-        return res.status(401).json({ message: error });
-        
+export const UpdateProfile = async (req, res) => {
+  try {
+    const { profilePic, userId } = req.body;
+
+    if (!profilePic || !userId) {
+      return res.status(400).json({ message: 'Profile picture and userId are required.' });
     }
-}
+
+    // Upload to Cloudinary
+    const uploadResponse = await cloudinary.uploader.upload(profilePic, {
+      folder: 'profile_pics',
+    });
+
+    // Update user profilePic in DB
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profilePic: uploadResponse.secure_url },
+      { new: true }
+    ).select('-password'); // ✅ correct way to exclude password
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error('❌ Error in UpdateProfile:', error);
+    return res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
 
 export const Check =  (req,res)=>{
     try{
@@ -97,5 +111,16 @@ export const Check =  (req,res)=>{
     catch(error){
         res.status(401).json({message:error});
 
+    }
+}
+
+export const Profile = async (req,res)=>{
+    try {
+        const user = await User.findById(req.user._id).select("-password");
+        res.json(user);
+        
+    } catch (error) {
+        res.status(401).json(error)
+        
     }
 }
