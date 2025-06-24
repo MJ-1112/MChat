@@ -36,7 +36,7 @@ function Profile() {
           "http://localhost:5001/api/auth/update-profile",
           {
             userId: user._id,
-            profilePic: base64,
+            profilepic: base64,
           },
           {
             withCredentials: true,
@@ -64,7 +64,7 @@ function Profile() {
           style={{ position: "relative", width: 96, height: 96 }}
         >
           <Avatar
-            src={user?.profilePic}
+            src={user?.profilepic}
             sx={{ width: "100%", height: "100%" }}
           />
           <label
