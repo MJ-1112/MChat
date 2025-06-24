@@ -16,40 +16,47 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
+    
     const copySignup = { ...formDetails };
     copySignup[name] = value;
     setFormDetails(copySignup);
   };
-  const handeSubmit = async (e) => {
-    e.preventDefault();
-   
-    const { FullName, email, password } = formDetails;
-    if (!FullName || !email || !password) {
-      handleError("All fields must be filled");
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const { FullName, email, password } = formDetails;
+  if (!FullName || !email || !password) {
+    handleError("All fields must be filled");
+    return;
+  }
+
+  try {
     const response = await axios.post(
       "http://localhost:5001/api/auth/signup",
-      formDetails
+      formDetails,
+      {
+        withCredentials: true,
+      }
     );
-    console.log(response.data);
+
     const { message, success, error } = response.data;
+
     if (success) {
       handleSuccess(message);
       setTimeout(() => {
         navigate("/login");
       }, 2000);
-      return;
-     }
-      else if(!success){
-        handleError(message);
-      }
-      else if(error){
-        const details = error?.details.message;
-        handleError(details);
-      }
-    
-  };
+    } else if (!success) {
+      handleError(message);
+    } else if (error) {
+      const details = error?.details?.message || "Something went wrong";
+      handleError(details);
+    }
+  } catch (err) {
+    handleError(err.response?.data?.message || "Signup failed");
+  }
+};
+
 
   return (
     <div>
@@ -59,7 +66,7 @@ function Signup() {
         <h2 className="mt-5 text-3xl font-medium">Get started for free</h2>
         <form
           className="flex flex-col mt-2 gap-4 w-130 h-auto p-5"
-          onSubmit={handeSubmit}
+          onSubmit={handleSubmit}
         >
           <label className="font-medium">Name</label>
           <input

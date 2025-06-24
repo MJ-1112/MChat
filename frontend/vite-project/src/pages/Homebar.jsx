@@ -1,7 +1,7 @@
 import React from 'react'
 import { handleSuccess } from '../utils';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { ToastContainer} from "react-toastify";
 
 function Homebar() {
@@ -26,12 +26,12 @@ const handleClick = async () => {
         <nav className=' h-15 flex gap-200 items-center p-4 font-sans text-xl shadow '>
             
 
-            <span className='font-semibold text-2xl' >MChat</span>
+            <span className='font-semibold text-xxl' >MChat</span>
             <ul className='flex gap-10 '>
-                <li className='cursor-pointer'>Home</li>
-                <li className='cursor-pointer'>Settings</li>
-                <li className='cursor-pointer'>Profile</li>
-                <li className='cursor-pointer' onClick={handleClick}>Logout</li>
+               <Link to='/home'><li className='cursor-pointer'>Home</li></Link>
+                 <Link to='/settings'><li className='cursor-pointer'>Settings</li></Link>
+                 <Link to='/profile'><li className='cursor-pointer'>Profile</li></Link>
+                 <li className='cursor-pointer' onClick={handleClick}>Logout</li>
             </ul>
             <ToastContainer/>
             
